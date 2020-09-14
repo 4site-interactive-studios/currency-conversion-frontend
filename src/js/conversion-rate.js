@@ -63,7 +63,7 @@ $(document).ready(function () {
                 }
             }
 
-            function conversionRate(selectedRate, currentLangRate, selectedAmt, calc, currency) {
+            function conversionRate(currentLangRate, selectedAmt, calc, currency) {
                 formatter = new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: currency,
@@ -74,7 +74,6 @@ $(document).ready(function () {
             }
 
             $('select#en__field_pseudo_currencyConverter').change(function () {
-                console.log("Currency Converter Changed");
                 if (this.value != lang) {
                     $('div#pseudo_Info').css('display', 'block');
                 } else {
@@ -108,7 +107,7 @@ $(document).ready(function () {
                 }
 
                 //Default output when the dropdown has been selected
-                conversionRate(selectedRate, currentLangRate, selectedAmt, calc, this.value);
+                conversionRate(currentLangRate, selectedAmt, calc, this.value);
             });
 
             $('select#en__field_pseudo_currencyConverter option:selected').each(
@@ -136,13 +135,12 @@ $(document).ready(function () {
                     }
 
                     //Default output when the dropdown has been selected
-                    conversionRate(selectedRate, currentLangRate, selectedAmt, calc, this.value);
+                    conversionRate(currentLangRate, selectedAmt, calc, this.value);
                 });
 
             //Action to take when one of the buttons have been changed
             $('input[name="transaction.donationAmt"]').on('click',
                 function () {
-                    console.log("Donation Amount Clicked");
                     selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
                     currency = $('select#en__field_pseudo_currencyConverter option:selected').val();
 
@@ -160,7 +158,7 @@ $(document).ready(function () {
                             formatter.format(calc) + ' ' +
                             currency);
                     } else {
-                        conversionRate(selectedRate, currentLangRate, selectedAmt, calc, currency);
+                        conversionRate(currentLangRate, selectedAmt, calc, currency);
                     }
                 });
 
@@ -168,7 +166,6 @@ $(document).ready(function () {
             $('input[name="transaction.donationAmt.other"]')
                 .keyup(
                     function () {
-                        console.log("Other Keyup");
                         currency = $('select#en__field_pseudo_currencyConverter option:selected').val();
                         selectedRate = node[0].rates[currency];
                         currentLangRate = node[0].rates[lang];
@@ -180,7 +177,7 @@ $(document).ready(function () {
                             $('h3#pseudoRates').html('$0 ' + lang + ' = ' + formatter.format(calc) + ' ' + currency);
                         } else {
                             $('h3#pseudoRates').html(
-                                conversionRate(selectedRate, currentLangRate, this.value, calc, currency));
+                                conversionRate(currentLangRate, this.value, calc, currency));
                         }
                     });
         }
