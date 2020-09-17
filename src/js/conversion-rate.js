@@ -24,7 +24,7 @@ $(document).ready(function () {
     //Get the cache
     $.ajax({
         type: 'get',
-        url: 'https://resources.peta.org/php/currency-conversion-backend/fixer-io.php',
+        url: 'https://resources.peta.org/engaging-networks/services/currency-conversion-backend/fixer-io.php',
         dataType: 'JSON',
         success: function (res) {
             appendConverter(res);
