@@ -77,7 +77,7 @@ $(document).ready(function () {
                 $('h3#pseudoRates').html(conversionRate);
             }
 
-            $('select#en__field_pseudo_currencyConverter').change(function () {
+            $(document).on('change', 'select#en__field_pseudo_currencyConverter', function(){
                 console.log("Currency Converter Changed");
                 if (this.value != lang) {
                     $('div#pseudo_Info').css('display', 'block');
@@ -144,7 +144,7 @@ $(document).ready(function () {
                 });
 
             //Action to take when one of the buttons have been changed
-            $('input[name="transaction.donationAmt"]').on('click',
+            $('input[name="transaction.donationAmt"]').on('click touchstart',
                 function () {
                     console.log("Donation Amount Clicked");
                     selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
