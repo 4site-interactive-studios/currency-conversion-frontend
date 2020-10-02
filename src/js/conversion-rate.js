@@ -38,7 +38,7 @@ $(document).ready(function () {
     function appendConverter(res) {
         var node = [res];
         //Initiate appending the currency converter selector
-        $('.en__field--donationAmt').before('<style>h3#pseudoRates{margin-bottom: 0px;}.en__field--pseudo-currencyText select.en__field__input--select{min-width: auto; width: auto;}p.currencySelectLabel{display:inline;}p.langInfo{font-size:.8rem;}.en__field--pseudo-currencyConverter{width: 100%;}.en__field--pseudo-currencyText{display: inline-block !important;}#en__field_pseudo_currencyConverter{border: none;background-position: calc(100% + 1rem);padding-right: 1.5rem;margin-bottom: 0; margin-left:2px;}select#en__field_pseudo_currencyConverter:focus{box-shadow: 0 0 0;}#pseudo_Info{padding: 1rem;display: block;border: 1px solid rgb(204, 204, 204);border-radius: 5px;margin-top: .25rem;} hr.currencyDivider{margin: 0 0 1rem 0;}</style><div class="en__field en__field--select en__field--0000 en__field--pseudo-currencyConverter"><div class="en__field__element en__field__element--select en__field--pseudo-currencyText"><select id="en__field_pseudo_currencyConverter" class="en__field__input en__field__input--select" name="currencyConverter"></select></div><div id="pseudo_Info" style="display:none;"></div></div>');
+        $('.en__field--donationAmt').before('<style>p.currencySelectLabel{display:inline;}p.langInfo{font-size:.8rem;}.en__field--pseudo-currencyConverter{width: 100%;}.en__field--pseudo-currencyText{display: inline-block !important;}#en__field_pseudo_currencyConverter{border: none;background-position: calc(100% + 1rem);padding-right: 1.5rem;margin-bottom: 0;}select#en__field_pseudo_currencyConverter:focus{box-shadow: 0 0 0;}#pseudo_Info{padding: 1rem;display: block;border: 1px solid rgb(204, 204, 204);border-radius: 5px;margin-top: .25rem;} hr.currencyDivider{margin: 0 0 1rem 0;}</style><div class="en__field en__field--select en__field--0000 en__field--pseudo-currencyConverter"><div class="en__field__element en__field__element--select en__field--pseudo-currencyText"><select id="en__field_pseudo_currencyConverter" class="en__field__input en__field__input--select" name="currencyConverter"></select></div><div id="pseudo_Info" style="display:none;"></div></div>');
 
         //If there is an error in the API, then the block is hidden
         if (node[0].success == false || node == null) {
@@ -67,13 +67,33 @@ $(document).ready(function () {
                 }
             }
 
+            function numberFormatter (num) {
+                console.log(num)
+            var wholeAndDecimal = String(num.toFixed(2)).split(".");
+            console.log(wholeAndDecimal)
+            var reversedWholeNumber = Array.from(wholeAndDecimal[0]).reverse();
+            var formattedOutput = [];
+        
+            reversedWholeNumber.forEach( (digit, index) => {
+                formattedOutput.push(digit);
+                if ((index + 1) % 3 === 0 && index < reversedWholeNumber.length - 1) {
+                    formattedOutput.push(",");
+                }
+            })
+        
+            formattedOutput = formattedOutput.reverse().join('') + "." + wholeAndDecimal[1];
+        
+            return formattedOutput;
+        
+        }
+
             function conversionRate(currentLangRate, selectedAmt, calc, currency) {
-                formatter = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: currency,
-                    currencyDisplay: 'narrowSymbol'
-                });
-                var conversionRate = lang + '&nbsp;$' + selectedAmt + ' <wbr>= ' + currency + '&nbsp;' + formatter.format(calc);
+                var symbol = '$';
+                if(currency == 'EUR'){
+                    symbol = '€';
+                }
+
+                var conversionRate = lang + '&nbsp;$' + selectedAmt + ' <wbr>= ' + currency + '&nbsp;' + symbol+ numberFormatter(calc);
                 $('h3#pseudoRates').html(conversionRate);
             }
 
@@ -88,13 +108,14 @@ $(document).ready(function () {
                 var selectedRate = node[0].rates[this.value];
                 var currentLangRate = node[0].rates[lang];
                 var selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
-                var formatter = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: this.value,
-                    currencyDisplay: 'narrowSymbol'
-                });
+                //var formatter = new Intl.NumberFormat('en-US', {
+                //    style: 'currency',
+                //    currency: this.value,
+                //    currencyDisplay: 'narrowSymbol'
+                //});
 
-                $('div#pseudo_Info').html(loadLang(pageLang, this.value));
+                //$('#pseudo_Info').html(loadLang(pageLang, this.value));
+                $('#pseudo_Info').html(loadLang(pageLang, this.value));
 
                 var calc = (selectedAmt * selectedRate) / currentLangRate;
 
