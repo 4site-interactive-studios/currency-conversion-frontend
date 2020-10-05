@@ -193,6 +193,11 @@ $(document).ready(function () {
                 conversionRate(currentLangRate, selectedAmt, calc, $('select#en__field_pseudo_currencyConverter option:selected').val());
             });
 
+            $(document).on('change', 'input[name="transaction.recurrpay"]', function(){
+                var i = $('input[name="transaction.donationAmt"]:checked').val();
+                console.log(i);
+            });
+
             $('select#en__field_pseudo_currencyConverter option:selected').each(
                 function () {
 
@@ -241,29 +246,6 @@ $(document).ready(function () {
                     conversionRate(currentLangRate, selectedAmt, calc, currency);
                 }
             });
-
-            //Action to take when one of the buttons have been changed
-/*             $('input[name="transaction.donationAmt"]').on('click',
-                function () {
-                    console.log("Donation Amount Clicked");
-                    selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
-                    currency = $('select#en__field_pseudo_currencyConverter option:selected').val();
-
-                    //Get the rate
-                    selectedRate = node[0].rates[currency];
-                    currentLangRate = node[0].rates[lang];
-
-                    //calculate the rate
-                    calc = (selectedAmt * selectedRate) / currentLangRate;
-
-                    //Output text
-                    //Setting default value when the custom input is empty when clicking the other button
-                    if (!selectedAmt) {
-                        conversionRate(currentLangRate, 0, 0, currency);
-                    } else {
-                        conversionRate(currentLangRate, selectedAmt, calc, currency);
-                    }
-                }); */
 
             //calculate the rates when inputting the value
             $('input[name="transaction.donationAmt.other"]')
