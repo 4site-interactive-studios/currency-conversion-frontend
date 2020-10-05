@@ -168,7 +168,6 @@ $(document).ready(function () {
                 var selectedRate = node[0].rates[$('select#en__field_pseudo_currencyConverter option:selected').val()];
                 var currentLangRate = node[0].rates[lang];
                 var selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
-                var recurranceVal = 
 
                 console.log(selectedRate);
                 console.log(currentLangRate);
@@ -185,9 +184,33 @@ $(document).ready(function () {
                     } else {
                         //If there is a value in the input box after changing currency, get the value in the input box
                         selectedAmt = $('input[name="transaction.donationAmt.other"]').val();
+                        console.log(selectedAmt);
                         calc = (selectedAmt * selectedRate) / currentLangRate;
                     }
                 }
+
+                $('input[name="transaction.donationAmt"]').off('click',
+                function () {
+                    console.log("Donation Amount Clicked");
+                    selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
+                    currency = $('select#en__field_pseudo_currencyConverter option:selected').val();
+
+                    //Get the rate
+                    selectedRate = node[0].rates[currency];
+                    currentLangRate = node[0].rates[lang];
+
+                    //calculate the rate
+                    calc = (selectedAmt * selectedRate) / currentLangRate;
+
+                    //Output text
+                    //Setting default value when the custom input is empty when clicking the other button
+                    if (!selectedAmt) {
+                        conversionRate(currentLangRate, 0, 0, currency);
+                    } else {
+                        conversionRate(currentLangRate, selectedAmt, calc, currency);
+                    }
+                });
+
 
                 //Default output when the dropdown has been selected
                 conversionRate(currentLangRate, selectedAmt, calc, $('select#en__field_pseudo_currencyConverter option:selected').val());
