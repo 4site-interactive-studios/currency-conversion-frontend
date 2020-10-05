@@ -97,9 +97,9 @@ $(document).ready(function () {
             }
 
             function numberFormatter(num) {
-                console.log(num)
+                //console.log(num)
                 var wholeAndDecimal = String(num.toFixed(2)).split(".");
-                console.log(wholeAndDecimal)
+                //console.log(wholeAndDecimal)
                 var reversedWholeNumber = Array.from(wholeAndDecimal[0]).reverse();
                 var formattedOutput = [];
 
@@ -169,10 +169,6 @@ $(document).ready(function () {
                 var currentLangRate = node[0].rates[lang];
                 var selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
 
-                console.log(selectedRate);
-                console.log(currentLangRate);
-                console.log(selectedAmt);
-
                 var calc = (selectedAmt * selectedRate) / currentLangRate;
 
                 //Determine if the value is nothing
@@ -184,7 +180,6 @@ $(document).ready(function () {
                     } else {
                         //If there is a value in the input box after changing currency, get the value in the input box
                         selectedAmt = $('input[name="transaction.donationAmt.other"]').val();
-                        console.log(selectedAmt);
                         calc = (selectedAmt * selectedRate) / currentLangRate;
                     }
                 }
@@ -246,7 +241,6 @@ $(document).ready(function () {
             $('input[name="transaction.donationAmt.other"]')
                 .keyup(
                     function () {
-                        console.log("Other Keyup");
                         currency = $('select#en__field_pseudo_currencyConverter option:selected').val();
                         selectedRate = node[0].rates[currency];
                         currentLangRate = node[0].rates[lang];
