@@ -9,13 +9,42 @@ function loadLang(lang, currency) {
             info = `<p class="langInfo">All gifts are processed in U.S. dollars. Use this calculator to determine the amount of your gifts in ${currency} based on current exchange rates provided by Fixer.io</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>`;
             break;
         case 'es':
-            info = `<p class="langInfo">Todos los donativos se convierten a dólares estadounidenses USD. Usa esta calculadora para determinar el monto de tu donativo en ${currency} según el tipo de cambio actual provisto por Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>`;
+            info = `<p class="langInfo">Todos los donativos se convierten a dólares estadounidenses (USD). Usa esta calculadora para determinar el monto de tu donativo en ${esLangLoad(currency)} según el tipo de cambio actual provisto por Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>`;
             break;
         default:
             info = `<p class="langInfo">Conversion to ${currency} are based on current exchange rates to aid you in your selection. All gifts are shown in USD.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>`;
     }
 
     return info;
+}
+
+function esLangLoad(currency) {
+    var info = '';
+    switch(currency) {
+        case 'MXN':
+            info = `pesos mexicanos (MXN)`;
+            break;
+        case 'EUR':
+            info = `euros (EUR)`;
+            break;
+        case 'ARS':
+            info = `pesos argentinos (ARS)`;
+            break;
+        case 'COP':
+            info = `pesos colombianos (COP)`;
+            break;
+        case 'CAD':
+            info = `dólares canadienses (CAD)`;
+            break;
+        case 'CLP':
+            info = `pesos chilenos (CLP)`;
+            break;
+        default:
+            info = currency;
+    }
+
+    return info;
+
 }
 
 //jQuery for currency
@@ -113,8 +142,6 @@ $(document).ready(function () {
                 //    currency: this.value,
                 //    currencyDisplay: 'narrowSymbol'
                 //});
-
-                //$('#pseudo_Info').html(loadLang(pageLang, this.value));
                 $('#pseudo_Info').html(loadLang(pageLang, this.value));
 
                 var calc = (selectedAmt * selectedRate) / currentLangRate;
@@ -134,6 +161,36 @@ $(document).ready(function () {
 
                 //Default output when the dropdown has been selected
                 conversionRate(currentLangRate, selectedAmt, calc, this.value);
+            });
+
+            $(document).on('click', 'input[name="transaction.recurrpay"]', function(){
+                console.log("Recurrance Changed");
+                var selectedRate = node[0].rates[$('select#en__field_pseudo_currencyConverter option:selected').val()];
+                var currentLangRate = node[0].rates[lang];
+                var selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
+                var recurranceVal = 
+
+                console.log(selectedRate);
+                console.log(currentLangRate);
+                console.log(selectedAmt);
+
+                var calc = (selectedAmt * selectedRate) / currentLangRate;
+
+                //Determine if the value is nothing
+                if (!selectedAmt) {
+                    //If the input box is empty, set the amount to 0 for default output
+                    if (!$('input[name="transaction.donationAmt.other"]').val()) {
+                        selectedAmt = 0;
+                        calc = 0;
+                    } else {
+                        //If there is a value in the input box after changing currency, get the value in the input box
+                        selectedAmt = $('input[name="transaction.donationAmt.other"]').val();
+                        calc = (selectedAmt * selectedRate) / currentLangRate;
+                    }
+                }
+
+                //Default output when the dropdown has been selected
+                conversionRate(currentLangRate, selectedAmt, calc, $('select#en__field_pseudo_currencyConverter option:selected').val());
             });
 
             $('select#en__field_pseudo_currencyConverter option:selected').each(
@@ -165,7 +222,7 @@ $(document).ready(function () {
                 });
 
             //Action to take when one of the buttons have been changed
-            $('input[name="transaction.donationAmt"]').on('click touchstart',
+            $('input[name="transaction.donationAmt"]').on('click',
                 function () {
                     console.log("Donation Amount Clicked");
                     selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
@@ -181,9 +238,7 @@ $(document).ready(function () {
                     //Output text
                     //Setting default value when the custom input is empty when clicking the other button
                     if (!selectedAmt) {
-                        $('h3#pseudoRates').html('$0 ' + lang + ' = ' +
-                            formatter.format(calc) + ' ' +
-                            currency);
+                        conversionRate(currentLangRate, 0, 0, currency);
                     } else {
                         conversionRate(currentLangRate, selectedAmt, calc, currency);
                     }
@@ -202,7 +257,7 @@ $(document).ready(function () {
 
                         //Setting default value when the custom input is empty
                         if (!this.value) {
-                            $('h3#pseudoRates').html('$0 ' + lang + ' = ' + formatter.format(calc) + ' ' + currency);
+                            conversionRate(currentLangRate, 0, 0, currency);
                         } else {
                             $('h3#pseudoRates').html(
                                 conversionRate(currentLangRate, this.value, calc, currency));
