@@ -163,7 +163,7 @@ $(document).ready(function () {
                 conversionRate(currentLangRate, selectedAmt, calc, this.value);
             });
 
-            $(document).on('click', 'input[name="transaction.recurrpay"]', function () {
+            $(document).on('change', 'input[name="transaction.recurrpay"]', function () {
                 console.log("Recurrance Changed");
                 var selectedRate = node[0].rates[$('select#en__field_pseudo_currencyConverter option:selected').val()];
                 var currentLangRate = node[0].rates[lang];
@@ -191,11 +191,6 @@ $(document).ready(function () {
 
                 //Default output when the dropdown has been selected
                 conversionRate(currentLangRate, selectedAmt, calc, $('select#en__field_pseudo_currencyConverter option:selected').val());
-            });
-
-            $(document).on('change', 'input[name="transaction.recurrpay"]', function(){
-                var i = $('input[name="transaction.donationAmt"]:checked').val();
-                console.log(i);
             });
 
             $('select#en__field_pseudo_currencyConverter option:selected').each(
