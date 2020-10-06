@@ -98,7 +98,8 @@ $(document).ready(function () {
 
             function numberFormatter(num) {
                 //console.log(num)
-                var wholeAndDecimal = String(num.toFixed(2)).split(".");
+                var toFixedNum = parseFloat(num).toFixed(2);
+                var wholeAndDecimal = String(toFixedNum).split(".");
                 //console.log(wholeAndDecimal)
                 var reversedWholeNumber = Array.from(wholeAndDecimal[0]).reverse();
                 var formattedOutput = [];
@@ -122,7 +123,7 @@ $(document).ready(function () {
                     symbol = '€';
                 }
 
-                var conversionRate = lang + '&nbsp;$' + selectedAmt + ' <wbr>= ' + currency + '&nbsp;' + symbol + numberFormatter(calc);
+                var conversionRate = lang + '&nbsp;$' + numberFormatter(selectedAmt) + ' <wbr>= ' + currency + '&nbsp;' + symbol + numberFormatter(calc);
                 $('h3#pseudoRates').html(conversionRate);
             }
 
