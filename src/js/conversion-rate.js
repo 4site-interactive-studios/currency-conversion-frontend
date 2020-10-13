@@ -96,6 +96,10 @@ $(document).ready(function () {
                 }
             }
 
+            jQuery.each(node[0].rates, function(key, value) {
+                console.log(key + ":" + value);
+            });
+
             function numberFormatter(num) {
                 //console.log(num)
                 var toFixedNum = parseFloat(num).toFixed(2);
