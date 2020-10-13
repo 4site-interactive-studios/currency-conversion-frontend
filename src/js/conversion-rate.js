@@ -6,13 +6,13 @@ function loadLang(lang, currency) {
     var info = '';
     switch (lang) {
         case 'en':
-            info = `<p class="langInfo">All gifts are processed in U.S. dollars. Use this calculator to determine the amount of your gifts in ${currency} based on current exchange rates provided by Fixer.io</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>`;
+            info = '<p class="langInfo">All gifts are processed in U.S. dollars. Use this calculator to determine the amount of your gifts in '+ currency +' based on current exchange rates provided by Fixer.io</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
             break;
         case 'es':
-            info = `<p class="langInfo">Todos los donativos se convierten a dólares estadounidenses (USD). Usa esta calculadora para determinar el monto de tu donativo en ${esLangLoad(currency)} según el tipo de cambio actual provisto por Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>`;
+            info = '<p class="langInfo">Todos los donativos se convierten a dólares estadounidenses (USD). Usa esta calculadora para determinar el monto de tu donativo en ' + esLangLoad(currency) + ' según el tipo de cambio actual provisto por Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
             break;
         default:
-            info = `<p class="langInfo">Conversion to ${currency} are based on current exchange rates to aid you in your selection. All gifts are shown in USD.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>`;
+            info = '<p class="langInfo">Conversion to '+ currency + 'are based on current exchange rates to aid you in your selection. All gifts are shown in USD.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
     }
 
     return info;
@@ -22,22 +22,22 @@ function esLangLoad(currency) {
     var info = '';
     switch (currency) {
         case 'MXN':
-            info = `pesos mexicanos (MXN)`;
+            info = 'pesos mexicanos (MXN)';
             break;
         case 'EUR':
-            info = `euros (EUR)`;
+            info = 'euros (EUR)';
             break;
         case 'ARS':
-            info = `pesos argentinos (ARS)`;
+            info = 'pesos argentinos (ARS)';
             break;
         case 'COP':
-            info = `pesos colombianos (COP)`;
+            info = 'pesos colombianos (COP)';
             break;
         case 'CAD':
-            info = `dólares canadienses (CAD)`;
+            info = 'dólares canadienses (CAD)';
             break;
         case 'CLP':
-            info = `pesos chilenos (CLP)`;
+            info = 'pesos chilenos (CLP)';
             break;
         default:
             info = currency;
@@ -81,18 +81,18 @@ $(document).ready(function () {
                 if (key == lang) {
                     if (pageLang == 'es') {
                         $('div.en__field--pseudo-currencyText').before(
-                            `<p class="currencySelectLabel">Moneda de Preferencia</p>`);
+                            '<p class="currencySelectLabel">Moneda de Preferencia</p>');
                         $('select#en__field_pseudo_currencyConverter').append(
-                            `<option value="${key}">(${key})</option>`);
+                            '<option value="' + key + '">(' + key + ')</option>');
                     } else {
                         $('div.en__field--pseudo-currencyText').before(
-                            `<p class="currencySelectLabel">Preferred currency</p>`);
+                            '<p class="currencySelectLabel">Preferred currency</p>');
                         $('select#en__field_pseudo_currencyConverter').append(
-                            `<option value="${key}">(${key})</option>`);
+                            '<option value="' + key + '">(' + key + ')</option>');
                     }
                 } else {
                     $('select#en__field_pseudo_currencyConverter').append(
-                        `<option value="${key}">(${key})</option>`);
+                        '<option value="' + key + '">(' + key + ')</option>');
                 }
             }
 
