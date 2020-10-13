@@ -77,7 +77,7 @@ $(document).ready(function () {
             }
         } else {
             //Print out the lists of currencies
-            for (const [key, value] of Object.entries(node[0].rates)) {
+/*             for (const [key, value] of Object.entries(node[0].rates)) {
                 if (key == lang) {
                     if (pageLang == 'es') {
                         $('div.en__field--pseudo-currencyText').before(
@@ -94,10 +94,25 @@ $(document).ready(function () {
                     $('select#en__field_pseudo_currencyConverter').append(
                         '<option value="' + key + '">(' + key + ')</option>');
                 }
-            }
+            } */
 
             jQuery.each(node[0].rates, function(key, value) {
-                console.log(key + ":" + value);
+                if (key == lang) {
+                    if (pageLang == 'es') {
+                        $('div.en__field--pseudo-currencyText').before(
+                            '<p class="currencySelectLabel">Moneda de Preferencia</p>');
+                        $('select#en__field_pseudo_currencyConverter').append(
+                            '<option value="' + key + '">(' + key + ')</option>');
+                    } else {
+                        $('div.en__field--pseudo-currencyText').before(
+                            '<p class="currencySelectLabel">Preferred currency</p>');
+                        $('select#en__field_pseudo_currencyConverter').append(
+                            '<option value="' + key + '">(' + key + ')</option>');
+                    }
+                } else {
+                    $('select#en__field_pseudo_currencyConverter').append(
+                        '<option value="' + key + '">(' + key + ')</option>');
+                }
             });
 
             function numberFormatter(num) {
