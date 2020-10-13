@@ -123,12 +123,13 @@ $(document).ready(function () {
                 var reversedWholeNumber = Array.from(wholeAndDecimal[0]).reverse();
                 var formattedOutput = [];
 
-                reversedWholeNumber.forEach((digit, index) => {
+                jQuery.each(reversedWholeNumber, function(digit, index) {
                     formattedOutput.push(digit);
                     if ((index + 1) % 3 === 0 && index < reversedWholeNumber.length - 1) {
                         formattedOutput.push(",");
                     }
-                })
+                });
+
 
                 formattedOutput = formattedOutput.reverse().join('') + "." + wholeAndDecimal[1];
 
