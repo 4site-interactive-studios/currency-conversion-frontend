@@ -48,7 +48,6 @@ function esLangLoad(currency) {
 }
 
 //jQuery for currency
-$(document).ready(function () {
 
     //Get the cache
     $.ajax({
@@ -67,7 +66,7 @@ $(document).ready(function () {
     function appendConverter(res) {
         var node = [res];
         //Initiate appending the currency converter selector
-        $('.en__field--donationAmt').before('<style>p.currencySelectLabel{display:inline;}p.langInfo{font-size:.8rem;}.en__field--pseudo-currencyConverter{width: 100%;}.en__field--pseudo-currencyText{display: inline-block !important;     margin-left: 0.1rem;}#en__field_pseudo_currencyConverter{max-width: 84px !important;min-width: 80px !important;border: none;background-position: calc(100% + 1rem);padding-right: 1.5rem;margin-bottom: 0;}select#en__field_pseudo_currencyConverter:focus{box-shadow: 0 0 0;}#pseudo_Info{padding: 1rem;display: block;border: 1px solid rgb(204, 204, 204);border-radius: 5px;margin-top: .25rem;} hr.currencyDivider{margin: 0 0 1rem 0;}</style><div class="en__field en__field--select en__field--0000 en__field--pseudo-currencyConverter"><div class="en__field__element en__field__element--select en__field--pseudo-currencyText"><select id="en__field_pseudo_currencyConverter" class="en__field__input en__field__input--select" name="currencyConverter"></select></div><div id="pseudo_Info" style="display:none;"></div></div>');
+        $('.en__field--donationAmt').before('<style>p.currencySelectLabel{display:inline;}p.langInfo{font-size:.8rem;}.en__field--pseudo-currencyConverter{width: 100%;}.en__field--pseudo-currencyText{display: inline-block !important;     margin-left: 0.1rem;}#en__field_pseudo_currencyConverter{max-width: 84px !important;min-width: 80px !important;background-position: calc(100% + 1rem);padding-right: 1.5rem;padding-left: 1rem;margin-left: .5rem;margin-bottom: 0;}select#en__field_pseudo_currencyConverter:focus{box-shadow: 0 0 0;}#pseudo_Info{padding: 1rem;display: block;border: 1px solid rgb(204, 204, 204);border-radius: 5px;margin-top: .25rem;} hr.currencyDivider{margin: 0 0 1rem 0;}</style><div class="en__field en__field--select en__field--0000 en__field--pseudo-currencyConverter"><div class="en__field__element en__field__element--select en__field--pseudo-currencyText"><select id="en__field_pseudo_currencyConverter" class="en__field__input en__field__input--select" name="currencyConverter"></select></div><div id="pseudo_Info" style="display:none;"></div></div>');
 
         //If there is an error in the API, then the block is hidden
         if (node[0].success == false || node == null || !Array.from) {
@@ -102,16 +101,16 @@ $(document).ready(function () {
                         $('div.en__field--pseudo-currencyText').before(
                             '<p class="currencySelectLabel">Moneda de Preferencia</p>');
                         $('select#en__field_pseudo_currencyConverter').append(
-                            '<option value="' + key + '">(' + key + ')</option>');
+                            '<option value="' + key + '">' + key + '</option>');
                     } else {
                         $('div.en__field--pseudo-currencyText').before(
                             '<p class="currencySelectLabel">Preferred currency</p>');
                         $('select#en__field_pseudo_currencyConverter').append(
-                            '<option value="' + key + '">(' + key + ')</option>');
+                            '<option value="' + key + '">' + key + '</option>');
                     }
                 } else {
                     $('select#en__field_pseudo_currencyConverter').append(
-                        '<option value="' + key + '">(' + key + ')</option>');
+                        '<option value="' + key + '">' + key + '</option>');
                 }
             });
 
@@ -413,4 +412,3 @@ $(document).ready(function () {
                     });
         }
     }
-});
