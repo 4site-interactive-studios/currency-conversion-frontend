@@ -9,7 +9,7 @@ function loadLang(lang, currency) {
       info =
         '<p class="langInfo">All gifts are processed in U.S. dollars (USD). Use this calculator to determine the amount of your gift in ' +
         currencyLang("en", currency) +
-        ' based on current exchange rates provided by Fixer.io</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
+        ' based on current exchange rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
       break;
     case "es":
       info =
