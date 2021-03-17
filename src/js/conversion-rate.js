@@ -57,6 +57,46 @@ function currencyLang(lang, currency) {
 
 //jQuery for currency
 
+//regular expressions to extract IP and country values
+const countryCodeExpression = /loc=([\w]{2})/;
+const userIPExpression = /ip=([\w\.]+)/;
+//automatic country determination.
+function initCountry() {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.timeout = 3000;
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    countryCode = countryCodeExpression.exec(this.responseText)
+                    ip = userIPExpression.exec(this.responseText)
+                    if (countryCode === null || countryCode[1] === '' ||
+                        ip === null || ip[1] === '') {
+                        reject('IP/Country code detection failed');
+                    }
+                    let result = {
+                        "countryCode": countryCode[1],
+                        "IP": ip[1]
+                    };
+                    resolve(result)
+                } else {
+                    reject(xhr.status)
+                }
+            }
+        }
+        xhr.ontimeout = function () {
+            reject('timeout')
+        }
+        xhr.open('GET', 'https://www.cloudflare.com/cdn-cgi/trace', true);
+        xhr.send();
+    });
+}
+
+
+
+
+
+
 //Get the cache
 $.ajax({
   type: "get",
@@ -64,7 +104,15 @@ $.ajax({
     "https://resources.peta.org/engaging-networks/services/currency-conversion-backend/fixer-io.php",
   dataType: "JSON",
   success: function(res) {
-    appendConverter(res);
+    initCountry()
+      .then((result) => {
+        // for DEBUGGING only
+        // result.countryCode="CA";
+        if(result.countryCode==="CA" && pageLang==="en" || pageLang!=="en"){
+          appendConverter(res,result.countryCode);
+        }
+      })
+      .catch((e) => console.log(e));
   },
   //Could not get fixer.io API
   error: function(res) {
@@ -72,8 +120,9 @@ $.ajax({
   },
 });
 
-function appendConverter(res) {
+function appendConverter(res,userLoc) {
   var node = [res];
+  console.log({userLoc});
   //Initiate appending the currency converter selector
   $(".en__field--donationAmt").before(
     '<style>p.currencySelectLabel{display:inline;}p.langInfo{font-size:.8rem;}.en__field--pseudo-currencyConverter{width: 100%;}.en__field--pseudo-currencyText{width: 120px; display: inline-block !important;     margin-left: 0.1rem;}#en__field_pseudo_currencyConverter{max-width: 110px !important;min-width: 80px !important;background-position: calc(100% + 1rem);padding-right: 1.5rem;padding-left: 1rem;margin-left: .5rem;margin-bottom: 0;}select#en__field_pseudo_currencyConverter:focus{box-shadow: 0 0 0;}#pseudo_Info{padding: 1rem;display: block;border: 1px solid rgb(204, 204, 204);border-radius: 5px;margin-top: .25rem;} hr.currencyDivider{margin: 0 0 1rem 0;}</style><div class="en__field en__field--select en__field--0000 en__field--pseudo-currencyConverter"><div class="en__field__element en__field__element--select en__field--pseudo-currencyText"><select id="en__field_pseudo_currencyConverter" class="en__field__input en__field__input--select" name="currencyConverter"></select></div><div id="pseudo_Info" style="display:none;"></div></div>'
@@ -86,6 +135,9 @@ function appendConverter(res) {
       console.error(node[0].error["info"] + " https://fixer.io/");
     }
   } else {
+    if(userLoc==="CA"){
+      node[0].rates = {USD:node[0].rates.USD, CAD:node[0].rates.CAD, EUR:node[0].rates.EUR, GBP:node[0].rates.GBP, MXN:node[0].rates.MXN};
+    }
     jQuery.each(node[0].rates, function(key, value) {
       if (key == lang) {
         if (pageLang == "es") {
