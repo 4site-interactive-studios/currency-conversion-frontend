@@ -63,6 +63,9 @@ function currencyLang(lang, currency) {
     case "CLP":
       info = { es: "pesos Chilenos (CLP)", en: "Chilean pesos (CLP)" };
       break;
+    case "GBP":
+      info = { es: "libras esterlinas (GBP)", en: "British Pounds (GBP)" };
+      break;
     default:
       info = { es: "(" + currency + ")", en: "(" + currency + ")" };
   }
