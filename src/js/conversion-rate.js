@@ -46,25 +46,25 @@ function currencyLang(lang, currency) {
   var info = {};
   switch (currency) {
     case "MXN":
-      info = { es: "pesos Mexicanos (MXN)", en: "Mexican pesos (MXN)" };
+      info = { es: "pesos Mexicanos (MXN)", en: "Mexican peso (MXN)" };
       break;
     case "EUR":
-      info = { es: "Euros (EUR)", en: "Euros (EUR)" };
+      info = { es: "Euros (EUR)", en: "Euro (EUR)" };
       break;
     case "ARS":
-      info = { es: "pesos Argentinos (ARS)", en: "Argentine pesos (ARS)" };
+      info = { es: "pesos Argentinos (ARS)", en: "Argentine peso (ARS)" };
       break;
     case "COP":
-      info = { es: "pesos Colombianos (COP)", en: "Colombian pesos (COP)" };
+      info = { es: "pesos Colombianos (COP)", en: "Colombian peso (COP)" };
       break;
     case "CAD":
-      info = { es: "dólares Canadienses (CAD)", en: "Canadian dollars (CAD)" };
+      info = { es: "dólares Canadienses (CAD)", en: "Canadian dollar (CAD)" };
       break;
     case "CLP":
-      info = { es: "pesos Chilenos (CLP)", en: "Chilean pesos (CLP)" };
+      info = { es: "pesos Chilenos (CLP)", en: "Chilean peso (CLP)" };
       break;
     case "GBP":
-      info = { es: "libras esterlinas (GBP)", en: "British Pounds (GBP)" };
+      info = { es: "libras esterlinas (GBP)", en: "British Pound (GBP)" };
       break;
     default:
       info = { es: "(" + currency + ")", en: "(" + currency + ")" };
