@@ -22,9 +22,9 @@ function loadLang(lang, currency) {
   switch (lang) {
     case "en":
       info =
-        '<p class="langInfo">All gifts are processed in U.S. dollars (USD). Use this calculator to determine the amount of your gift in ' +
+        '<p class="langInfo">All gifts are processed in U.S. dollars (USD). To see the ' +
         currencyLang("en", currency) +
-        ' based on current exchange rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
+        ' equivalent choose an amount in USD below and this calculator will display both amounts. FX rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
       break;
     case "es":
       info =
@@ -34,9 +34,9 @@ function loadLang(lang, currency) {
       break;
     default:
       info =
-        '<p class="langInfo">Conversion to ' +
+        '<p class="langInfo">All gifts are processed in U.S. dollars (USD). To see the ' +
         currencyLang("en", currency) +
-        ' are based on current exchange rates to aid you in your selection. All gifts are shown in U.S. dollars (USD).</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
+        ' equivalent choose an amount in USD below and this calculator will display both amounts. FX rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
   }
 
   return info;
