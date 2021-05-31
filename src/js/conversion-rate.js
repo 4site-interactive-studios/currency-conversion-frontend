@@ -15,7 +15,7 @@ function fromCanada() {
   return ipCanada;
 }
 
-console.log("From Canada?", fromCanada());
+//console.log("From Canada?", fromCanada());
 //Function to determine the output of the language in the info box
 function loadLang(lang, currency) {
   var info = "";
@@ -80,7 +80,7 @@ const countryCodeExpression = /loc=([\w]{2})/;
 const userIPExpression = /ip=([\w\.]+)/;
 //automatic country determination.
 function initCountry() {
-  return new Promise((resolve, reject) => {
+  return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.timeout = 3000;
     xhr.onreadystatechange = function() {
@@ -200,7 +200,7 @@ function appendConverter(res) {
     var wholeAndDecimal = String(toFixedNum).split(".");
     //console.log(wholeAndDecimal)
 
-    var reversedWholeNumber = Array.from(wholeAndDecimal[0]).reverse();
+    var reversedWholeNumber = wholeAndDecimal[0].split('').reverse();
     var formattedOutput = [];
 
     jQuery.each(reversedWholeNumber, function(index, digit) {
@@ -387,13 +387,13 @@ function appendConverter(res) {
 
 // First Call
 initCountry()
-  .then((result) => {
+  .then(function(result) {
     // for DEBUGGING only
     // result.countryCode="CA";
     ipCanada = result.countryCode === "CA";
     loadConversionContainer();
   })
-  .catch((e) => console.log(e));
+  .catch(function(e) { console.log(e); });
 
 $("#en__field_supporter_country").change(function() {
   loadConversionContainer();
