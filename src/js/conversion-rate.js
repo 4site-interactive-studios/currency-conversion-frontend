@@ -82,6 +82,7 @@ const userIPExpression = /ip=([\w\.]+)/;
 function initCountry() {
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://www.cloudflare.com/cdn-cgi/trace", true);
     xhr.timeout = 3000;
     xhr.onreadystatechange = function() {
       if (this.readyState == 4) {
@@ -109,7 +110,6 @@ function initCountry() {
     xhr.ontimeout = function() {
       reject("timeout");
     };
-    xhr.open("GET", "https://www.cloudflare.com/cdn-cgi/trace", true);
     xhr.send();
   });
 }
