@@ -22,21 +22,21 @@ function loadLang(lang, currency) {
   switch (lang) {
     case "en":
       info =
-        '<p class="langInfo">All gifts are processed in U.S. dollars (USD). To see the ' +
+        '<p class="langInfo"><strong>Your gift will be charged in U.S. dollars (USD).</strong> To see the ' +
         currencyLang("en", currency) +
-        ' equivalent choose an amount in USD below and this calculator will display both amounts. FX rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
+        ' equivalent choose an amount in USD below. Both amounts will be displayed. FX rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
       break;
     case "es":
       info =
-        '<p class="langInfo">Todos los donativos se convierten a dólares estadounidenses (USD). Usa esta calculadora para determinar el monto de tu donativo en ' +
+        '<p class="langInfo"><strong>Todos los donativos se convierten a dólares estadounidenses (USD).</strong> Usa esta calculadora para determinar el monto de tu donativo en ' +
         currencyLang("es", currency) +
         ' según el tipo de cambio actual provisto por Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
       break;
     default:
       info =
-        '<p class="langInfo">All gifts are processed in U.S. dollars (USD). To see the ' +
+        '<p class="langInfo"><strong>Your gift will be charged in U.S. dollars (USD).</strong> To see the ' +
         currencyLang("en", currency) +
-        ' equivalent choose an amount in USD below and this calculator will display both amounts. FX rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
+        ' equivalent choose an amount in USD below. Both amounts will be displayed. FX rates provided by Fixer.io.</p><hr class="currencyDivider"><h3 id="pseudoRates"></h3>';
   }
 
   return info;
@@ -80,10 +80,10 @@ const countryCodeExpression = /loc=([\w]{2})/;
 const userIPExpression = /ip=([\w\.]+)/;
 //automatic country determination.
 function initCountry() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.timeout = 3000;
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState == 4) {
         if (this.status == 200) {
           countryCode = countryCodeExpression.exec(this.responseText);
@@ -106,7 +106,7 @@ function initCountry() {
         }
       }
     };
-    xhr.ontimeout = function() {
+    xhr.ontimeout = function () {
       reject("timeout");
     };
     xhr.open("GET", "https://www.cloudflare.com/cdn-cgi/trace", true);
@@ -119,16 +119,15 @@ function loadConversionContainer() {
   //Get the cache
   $.ajax({
     type: "get",
-    url:
-      "https://resources.peta.org/engaging-networks/services/currency-conversion-backend/fixer-io.php",
+    url: "https://resources.peta.org/engaging-networks/services/currency-conversion-backend/fixer-io.php",
     dataType: "JSON",
-    success: function(res) {
+    success: function (res) {
       if (fromCanada() || pageLang !== "en") {
         appendConverter(res);
       }
     },
     //Could not get fixer.io API
-    error: function(res) {
+    error: function (res) {
       console.error(res.responseText);
     },
   });
@@ -170,7 +169,7 @@ function appendConverter(res) {
       CLP: node[0].rates.CLP,
     };
   }
-  jQuery.each(node[0].rates, function(key, value) {
+  jQuery.each(node[0].rates, function (key, value) {
     if (key == lang) {
       if (pageLang == "es") {
         $("div.en__field--pseudo-currencyText").before(
@@ -181,7 +180,7 @@ function appendConverter(res) {
         );
       } else {
         $("div.en__field--pseudo-currencyText").before(
-          '<p class="currencySelectLabel">Preferred Currency</p>'
+          '<p class="currencySelectLabel">Compare Currency</p>'
         );
         $("select#en__field_pseudo_currencyConverter").append(
           '<option value="' + key + '">' + key + "</option>"
@@ -203,7 +202,7 @@ function appendConverter(res) {
     var reversedWholeNumber = wholeAndDecimal[0].split("").reverse();
     var formattedOutput = [];
 
-    jQuery.each(reversedWholeNumber, function(index, digit) {
+    jQuery.each(reversedWholeNumber, function (index, digit) {
       formattedOutput.push(digit);
       if ((index + 1) % 3 === 0 && index < reversedWholeNumber.length - 1) {
         formattedOutput.push(",");
@@ -237,7 +236,7 @@ function appendConverter(res) {
   $(document).on(
     "change",
     "select#en__field_pseudo_currencyConverter",
-    function() {
+    function () {
       console.log("Currency Converter Changed");
       if (this.value != lang) {
         $("div#pseudo_Info").css("display", "block");
@@ -277,7 +276,7 @@ function appendConverter(res) {
     }
   );
 
-  $(document).on("change", 'input[name="transaction.recurrpay"]', function() {
+  $(document).on("change", 'input[name="transaction.recurrpay"]', function () {
     console.log("Recurrance Changed");
     var selectedRate =
       node[0].rates[
@@ -311,7 +310,7 @@ function appendConverter(res) {
   });
 
   $("select#en__field_pseudo_currencyConverter option:selected").each(
-    function() {
+    function () {
       var selectedRate = node[0].rates[this.value];
       var currentLangRate = node[0].rates[lang];
       var selectedAmt = $(
@@ -340,7 +339,7 @@ function appendConverter(res) {
     }
   );
 
-  $(document).on("click", 'input[name="transaction.donationAmt"]', function() {
+  $(document).on("click", 'input[name="transaction.donationAmt"]', function () {
     console.log("Donation Amount Clicked");
     selectedAmt = $('input[name="transaction.donationAmt"]:checked').val();
     currency = $(
@@ -364,7 +363,7 @@ function appendConverter(res) {
   });
 
   //calculate the rates when inputting the value
-  $('input[name="transaction.donationAmt.other"]').keyup(function() {
+  $('input[name="transaction.donationAmt.other"]').keyup(function () {
     currency = $(
       "select#en__field_pseudo_currencyConverter option:selected"
     ).val();
@@ -387,16 +386,16 @@ function appendConverter(res) {
 
 // First Call
 initCountry()
-  .then(function(result) {
+  .then(function (result) {
     // for DEBUGGING only
     // result.countryCode="CA";
     ipCanada = result.countryCode === "CA";
     loadConversionContainer();
   })
-  .catch(function(e) {
+  .catch(function (e) {
     console.log(e);
   });
 
-$("#en__field_supporter_country").change(function() {
+$("#en__field_supporter_country").change(function () {
   loadConversionContainer();
 });
