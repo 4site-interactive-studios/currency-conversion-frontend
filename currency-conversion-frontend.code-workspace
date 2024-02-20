@@ -1,0 +1,14 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "../currency-conversion-backend"
+	},
+	{
+		"path": "../PETAResources"
+	}
+],
+  "settings": {}
+}
