@@ -137,13 +137,24 @@ function appendConverter(res) {
   if (containerLoaded) return;
   var node = [res];
   //Initiate appending the currency converter selector
+  const containerStyle = document.createElement("style");
+  containerStyle.innerHTML = `.currency-converter-container p.currencySelectLabel{display:inline;}
+    .currency-converter-container p.langInfo{font-size:.74rem; color: #333; margin: 0 0 1rem; line-height: 1.6;}
+    .currency-converter-container{width: 100%; margin-bottom: 20px !important;}
+    .currency-converter-container .en__field--pseudo-currencyText{width: 120px; display: inline-block !important; margin-left: 0.1rem;}
+    .currency-converter-container select#en__field_pseudo_currencyConverter{max-width: 110px !important;min-width: 80px !important;background-position: calc(100% + 1rem); background-origin: content-box; padding-right: 1.5rem;padding-left: 1rem;margin-left: .5rem;margin-bottom: 0; padding: 6px; box-sizing: border-box; height: 40px}
+    .currency-converter-container select#en__field_pseudo_currencyConverter:focus,
+    .currency-converter-container select#en__field_pseudo_currencyConverter:focus-visible{box-shadow: 0 0 0;outline:none, border:none !important;}
+    .currency-converter-container #pseudo_Info{padding: 1rem;display: block;border: 1px solid rgb(204, 204, 204);border-radius: 5px;margin-top: .25rem; box-sizing: inherit;}
+    .currency-converter-container hr.currencyDivider{margin: 0 0 1rem 0; border: 1px solid #222;}`;
+  document.head.appendChild(containerStyle);
   $(".en__field--donationAmt").before(
-    '<style>p.currencySelectLabel{display:inline;}p.langInfo{font-size:.74rem;}.en__field--pseudo-currencyConverter{width: 100%;}.en__field--pseudo-currencyText{width: 120px; display: inline-block !important;     margin-left: 0.1rem;}#en__field_pseudo_currencyConverter{max-width: 110px !important;min-width: 80px !important;background-position: calc(100% + 1rem); background-origin: content-box; padding-right: 1.5rem;padding-left: 1rem;margin-left: .5rem;margin-bottom: 0;}select#en__field_pseudo_currencyConverter:focus{box-shadow: 0 0 0;}#pseudo_Info{padding: 1rem;display: block;border: 1px solid rgb(204, 204, 204);border-radius: 5px;margin-top: .25rem;} hr.currencyDivider{margin: 0 0 1rem 0;}</style><div class="en__field en__field--select en__field--0000 en__field--pseudo-currencyConverter"><div class="en__field__element en__field__element--select en__field--pseudo-currencyText"><select id="en__field_pseudo_currencyConverter" class="en__field__input en__field__input--select" name="currencyConverter"></select></div><div id="pseudo_Info" style="display:none;"></div></div>'
+    '<div class="en__field en__field--select en__field--0000 currency-converter-container"><div class="en__field__element en__field__element--select en__field--pseudo-currencyText"><select id="en__field_pseudo_currencyConverter" class="en__field__input en__field__input--select" name="currencyConverter"></select></div><div id="pseudo_Info" style="display:none;"></div></div>'
   );
 
   //If there is an error in the API, then the block is hidden
   if (node[0].success == false || node == null) {
-    $(".en__field--pseudo-currencyConverter").css("display", "none");
+    $(".currency-converter-container").css("display", "none");
     if (node[0].success == false) {
       console.error(node[0].error["info"] + " https://fixer.io/");
     }
