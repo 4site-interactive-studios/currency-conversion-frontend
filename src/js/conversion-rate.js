@@ -141,11 +141,11 @@ function appendConverter(res) {
   containerStyle.id = "currency-converter-styles";
   containerStyle.innerHTML = `.currency-converter-container p.currencySelectLabel{display:inline;}
     .currency-converter-container p.langInfo{font-size:.74rem; color: #333; margin: 0 0 1rem; line-height: 1.6;}
-    .currency-converter-container{width: 100%; margin-bottom: 20px !important;}
+    .currency-converter-container{width: 100%; max-width:500px; margin-bottom: 20px !important;}
     .currency-converter-container .en__field--pseudo-currencyText{width: 120px; display: inline-block !important; margin-left: 0.1rem;}
-    .currency-converter-container select#en__field_pseudo_currencyConverter{max-width: 110px !important;min-width: 80px !important;background-position: calc(100% + 1rem); background-origin: content-box; padding-right: 1.5rem;padding-left: 1rem;margin-left: .5rem;margin-bottom: 0; padding: 6px; box-sizing: border-box; height: 40px; border: 1px solid #CCC;}
+    .currency-converter-container select#en__field_pseudo_currencyConverter{max-width: 110px !important;min-width: 80px !important; padding-right: 1.5rem;padding-left: 1rem;margin-left: .5rem;margin-bottom: 0; padding: 6px !important; box-sizing: border-box; height: 40px; border: 1px solid #CCC;}
     .currency-converter-container select#en__field_pseudo_currencyConverter:focus,
-    .currency-converter-container select#en__field_pseudo_currencyConverter:focus-visible{box-shadow: 0 0 0;outline:none, border:none !important;}
+    .currency-converter-container select#en__field_pseudo_currencyConverter:focus-visible{box-shadow: 0 0 0;outline:none;}
     .currency-converter-container #pseudo_Info{padding: 1rem;display: block;border: 1px solid #CCC;border-radius: 5px;margin-top: .25rem; box-sizing: inherit;}
     .currency-converter-container hr.currencyDivider{margin: 0 0 1rem 0; border: 1px solid #222;}`;
   document.head.appendChild(containerStyle);
